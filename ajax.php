@@ -17,6 +17,13 @@
     }
   }
 
+  if(isset($_GET["x"])) {
+      header('Cache-Control: no-cache, must-revalidate');
+      header('Expires: Mon, 01 Jan 1996 00:00:00 GMT');
+      header('Content-type: application/json');
+      echo(json_encode(DAL::GetTotalRows()));
+  }
+
 
   if(isset($_POST["data"])) {
     $data = $_POST["data"];

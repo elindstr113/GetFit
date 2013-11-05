@@ -68,9 +68,9 @@ class DAL {
     $conn = new PDO("mysql:host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT.";", DBUSER, DBPASS);
     $results = $conn->query("SELECT tActivity, SUM(dblMiles) AS miles FROM tblLog WHERE dteDate>='2013-03-31' and dblMiles>0 GROUP BY tActivity");
     $rows = $results->fetchall();
-    $walk = "";
-    $run = "";
-    $walkrun = "";
+    $walk = 0;
+    $run = 0;
+    $walkrun = 0;
     foreach ($rows as $row) {
       $miles = $row["miles"];
       switch ($row["tActivity"]) {
@@ -85,14 +85,36 @@ class DAL {
           break;
       }
     }
+    $results = $conn->query("SELECT SUM(dblMiles) AS aMiles FROM tblLog WHERE dteDate>='2013-03-31' and tActivity='Run' AND tShoe='Ascis'");
+    $row = $results->fetch();
+    $aMiles = $row["aMiles"];
     $results = $conn->query("SELECT COUNT(tActivity) AS entries FROM tblLog WHERE dteDate>='2013-03-31' AND dblMiles>0");
     $row = $results->fetch();
     $entries = $row["entries"];
 
     $conn = null;
     $total = $walk + $run + $walkrun;
-    return array($walk, $run, $walkrun, $total, $entries);
+    return array($walk, $run, $walkrun, $total, $entries, $aMiles);
   }
+
+  static function GetTotalRows() {
+    $queries = array();
+    $output = array();
+    $conn = new PDO("mysql:host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT.";", DBUSER, DBPASS);
+    $queries[] = "SELECT tActivity, SUM(dblMiles) AS miles FROM tblLog WHERE dteDate>='2013-03-31' and dblMiles>0 GROUP BY tActivity";
+    $queries[] = "SELECT SUM(dblMiles) AS aMiles FROM tblLog WHERE dteDate>='2013-03-31' and tActivity='Run' AND tShoe='Ascis'";
+    $queries[] = "SELECT COUNT(tActivity) AS entries FROM tblLog WHERE dteDate>='2013-03-31' AND dblMiles>0";
+    $queries[] = "SELECT RIGHT(SEC_TO_TIME(nSeconds / dblMiles), 5) AS Pace, dblMiles FROM tblLog WHERE dteDate>='2013-03-31' AND dblMiles>0 AND nSeconds > 0 ORDER BY Pace LIMIT 30";
+    $results = $conn->query(join(";",$queries));
+    for ($i=0;$i<count($queries);$i++) {
+      $rows = $results->fetchall(PDO::FETCH_ASSOC);
+      $output[] = $rows;
+      $results->nextRowset();
+    }
+    $conn = null;
+    return $output;
+  }
+
 }
 
 ?>

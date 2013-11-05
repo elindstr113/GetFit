@@ -156,8 +156,8 @@ class calendar {
     print("<div style='float:right;width:100px;text-align:right;'>");
     print("<input type='submit' name='today' value='Today'>");
     print("</div>");
-    list($walk, $run, $walkrun, $total, $entries) = DAL::GetTotalMiles();
-    printf("<div id='summaryLine'>%.2f miles, in %d entries, logged since 3/31/2013. (%.2f walking, %.2f running)</div>", $total, $entries, $walk, $run, $walkrun);
+    list($walk, $run, $walkrun, $total, $entries, $aMiles) = DAL::GetTotalMiles();
+    printf("<div id='summaryLine'>%.2f miles, in %d entries, logged since 3/31/2013. (%.2f walking, %.2f running, %.2f on Asics)</div>", $total, $entries, $walk, $run, $aMiles);
     print("</div>");
     print("</div>");
 

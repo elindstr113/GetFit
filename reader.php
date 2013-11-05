@@ -11,7 +11,7 @@
   header('Expires: Mon, 01 Jan 1996 00:00:00 GMT');
   header('Content-type: application/json');
 
-  $events =  DAL::GetEvents('2013-08-01','2013-10-30');
+  $events =  DAL::GetEvents('2013-09-01','2013-10-30');
   $response = $_GET["jsoncallback"] . "(" . json_encode($events) . ")";
   echo $response;
 

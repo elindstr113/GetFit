@@ -1,8 +1,7 @@
 <?php
-
-error_reporting(E_ALL);
+  error_reporting(E_ALL);
   ini_set("display_errors", "1");
-  include_once("classes/DAL.php");
+  include_once("DAL.php");
 
   $targetMiles = 25;
 
