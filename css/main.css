@@ -1,0 +1,202 @@
+body {
+  background-color:#ddd;
+  text-align:center;
+}
+#calFrame {
+  display:inline-block;
+  position:relative;
+  z-index:3;
+  background-color:#ddd;
+}
+#calTitle {
+  text-align:center;
+  font-family: "Open Sans",sans-serif;
+  font-size: 18pt;
+  font-weight:bold;
+  vertical-align: middle;
+}
+
+#calTable {
+  margin-top:40px;
+  display: table;
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-color: gray;
+  font-family: "Open Sans",sans-serif;
+  font-size: 12px;
+  background-color: white;
+  margin-left:auto;
+  margin-right:auto;
+  box-shadow: 7px 7px 5px #888;
+}
+
+#calTable th {
+  border: 1px solid #ccc;
+  height:20px;
+}
+
+#calTable td {
+  border: 1px solid #ccc;
+  height: 91px;
+  width: 122px;
+  vertical-align: top;
+  position:relative;
+}
+
+#workoutGrid {
+    position:fixed;
+    bottom:0;
+    text-align:center;
+    width:99%;
+}
+
+#svgGrid {
+    margin-left:auto;
+    margin-right:auto;
+    width:1001px;
+    z-index:-100;
+}
+
+.dayNumber {
+  text-align:right;
+  cursor: pointer;
+}
+.dayNumber:hover {
+  background-color: black;
+  color: white;
+}
+
+.shaded {
+  color: #ccc;
+}
+
+.event {
+  color: white;
+  padding: 0px 7px 0px 7px;
+  -webkit-border-radius: 7px;
+  border-radius: 7px;
+  margin: 2px;
+  height: 17px;
+  text-align:left;
+  cursor: pointer;
+}
+
+.walk {
+  background-color: #6E3E6B;
+}
+
+.run {
+  background-color: #0781C9;
+}
+
+.walkrun {
+  background-color: #00cc33;
+}
+
+.total {
+  background-color: black;
+}
+
+.weight {
+  color: #999;
+  position:absolute;
+  bottom:0px;
+  text-align:right;
+  font-style: italic;
+  width:95%;
+}
+
+#floatLeft {
+  width:100px;
+  float:left;
+  text-align:left;
+  padding-left:5px;
+}
+
+#floatRight {
+  width:100px;
+  float:right;
+  text-align: right;
+  padding-right:5px;
+}
+
+.ra {
+  float:right;
+  width: 65px;
+  text-align:right;
+}
+
+.today {
+  height:1px;
+  background-color:#FCDFFF;
+  border-collapse: collapse;
+  text-align:right;
+  padding-right:3px;
+}
+
+.off {
+  background-color: #eee;
+}
+
+.miniMonth {
+  margin-left:4px;
+  text-align:left;
+  float:left;
+  width:50px;
+  font-weight:bold;
+  color:black;
+}
+
+#summaryLine {
+  text-align:left;
+  font-size:9pt;
+  font-style:italic;
+  color:#666;
+}
+
+#divEditor {
+  position:absolute;
+  z-index:30;
+  top:100px;
+  width:98%;
+  margin:0;
+  visibility:hidden;
+}
+
+#tblEditor {
+  margin-left:auto;
+  margin-right:auto;
+  font-family:verdana;
+  font-size:10pt;
+  border:solid black 1px;
+}
+
+#tblEditor th {
+  background-color:darkgray;
+  color:black;
+}
+
+#tblEditor td {
+  padding-left:5px;
+  padding-right:5px;
+  text-align:left;
+}
+
+.subhead {
+  background-color:#dedede;
+  color:black;
+  text-align:center;
+}
+
+.button {
+  background-color:#004068;
+  color:white;
+  width:75px;
+  height:25px;
+  font-size:10pt;
+}
+
+.time {
+  width:25px;
+  text-align:center;
+}
