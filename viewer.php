@@ -39,6 +39,7 @@
         }
 
 
+        //This weeks totals
         if ($thisWeeksTotal < $maxMiles) {
          printf("<tr style='color:red;font-weight:bold;'><td colspan='3'>Miles to Beat Max (%.2f)</td><td align='right'>%.2f</td></tr>", $maxMiles, $maxMiles - $thisWeeksTotal);
         }
