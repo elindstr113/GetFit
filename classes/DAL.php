@@ -1,6 +1,5 @@
 <?php
 
-
 include_once("dbparam.inc");
 include_once("event.php");
 include_once("weight.php");
@@ -100,7 +99,7 @@ class DAL {
 
   static function GetTotalRows() {
     $queries = array();
-    $output = array();
+    $output = array(); 
     $conn = new PDO("mysql:host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT.";", DBUSER, DBPASS);
     $queries[] = "SELECT tActivity, SUM(dblMiles) AS miles FROM tblLog WHERE dteDate>='2013-03-31' and dblMiles>0 GROUP BY tActivity";
     $queries[] = "SELECT SUM(dblMiles) AS aMiles FROM tblLog WHERE dteDate>='2013-03-31' and tActivity='Run' AND tShoe='Ascis'";
@@ -114,6 +113,32 @@ class DAL {
     }
     $conn = null;
     return $output;
+  }
+
+  static function GetSummary($limit) {
+
+    $records = array();
+
+    $conn = new PDO("mysql:host=".DBHOST.";dbname=".DBNAME.";port=".DBPORT.";", DBUSER, DBPASS);
+
+    #TOP FIVE MONTHS
+    $results = $conn->query("SELECT YEAR(dteDate) as year, MONTH(dteDate) as month, SUM(dblMiles) AS miles FROM tblLog WHERE dteDate>'2013-03-30' AND tActivity='Run' GROUP BY year, month ORDER BY miles DESC LIMIT $limit");
+    $records['months'] = $results->fetchall(PDO::FETCH_ASSOC);
+
+    #TOP FIVE WEEKS
+    $results = $conn->query("SELECT YEAR(dteDate) as year, MONTH(dteDate) as month, WEEK(dteDate) AS week, SUM(dblMiles) AS miles FROM tblLog WHERE dteDate>'2013-03-30' AND tActivity='Run' GROUP BY year, month, week ORDER BY miles DESC LIMIT $limit");
+    $records['weeks'] = $results->fetchall(PDO::FETCH_ASSOC);
+
+    #TOP FIVE MILES 
+    $results = $conn->query("SELECT dteDate, dblMiles FROM tblLog WHERE dteDate>'2013-03-30' AND tActivity='Run' ORDER BY dblMiles DESC LIMIT $limit");
+    $records['miles'] = $results->fetchall(PDO::FETCH_ASSOC);
+
+    #TOP FIVE PACE
+    $results = $conn->query("SELECT RIGHT(SEC_TO_TIME(nSeconds / dblMiles), 5) AS pace, dblMiles, dteDate FROM tblLog WHERE dteDate>'2013-03-31' AND tActivity='Run' AND dblMiles>0 AND nSeconds>0 ORDER BY pace, dteDate DESC LIMIT $limit");
+    $records['pace'] = $results->fetchall(PDO::FETCH_ASSOC);
+
+    $conn = null;
+    return $records;
   }
 
 }

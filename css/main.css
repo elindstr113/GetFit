@@ -37,15 +37,18 @@ body {
 
 #calTable td {
   border: 1px solid #ccc;
-  height: 91px;
+  height: 71px;
   width: 122px;
   vertical-align: top;
   position:relative;
 }
 
 #workoutGrid {
+    /*
     position:fixed;
     bottom:0;
+    */
+    margin-top:30px;
     text-align:center;
     width:99%;
 }
@@ -199,4 +202,39 @@ body {
 .time {
   width:25px;
   text-align:center;
+}
+
+#top5 {
+  margin-top:20px;
+  margin-left:auto;
+  margin-right:auto;
+  width:600px;
+  font-family:"Open Sans", sans-serif;
+  font-size: 10pt;
+  background-color:white;
+  box-shadow: 7px 7px 5px #888;
+}
+
+#top5table {
+  border-spacing: 0;
+  border-collapse: collapse;
+  border-color: gray;
+}
+
+#top5table th {
+  border-bottom:solid black 2px; 
+}
+#top5table td {
+  padding-left:5px;
+  padding-right:5px;
+}
+
+#top5header {
+  font-size:14pt;
+  font-weight:bold;
+}
+
+
+.rightcol {
+  border-right:solid silver 1px;
 }

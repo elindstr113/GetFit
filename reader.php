@@ -12,8 +12,8 @@
   header('Content-type: application/json');
 
   $events =  DAL::GetEvents('2013-09-01','2013-10-30');
-  $response = $_GET["jsoncallback"] . "(" . json_encode($events) . ")";
-  echo $response;
+  $response = $_GET["jsoncallback"] . "(" . json_encode($events) . ")";  
+  echo $response;  
 
 
 

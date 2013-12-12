@@ -1,7 +1,7 @@
 <?php
   error_reporting(E_ALL);
   ini_set("display_errors", "1");
-  include_once("classes/DAL.php");
+  include_once("DAL.php");
 
   $targetMiles = 25;
 
@@ -32,16 +32,15 @@
         printf("<tr style='font-weight:bold;'><td colspan='3'>This Week's Total</td><td align='right'>%.2f</td></tr>", $thisWeeksTotal);
 
         if ($thisWeeksTotal < $targetMiles) {
-         printf("<tr style='color:red;font-weight:bold;'><td colspan='3'>Miles to Make Goal (%.2f)</td><td align='right'>%.2f</td></tr>", $targetMiles, $targetMiles - $thisWeeksTotal);
+         printf("<tr style='color:red;font-weight:bold;'><td colspan='3'>Miles to Make Goal (%.2f)</td><td align='right'>%.2f</td></tr>", $targetMiles, $targetMiles - $thisWeeksTotal); 
         }
         else {
           printf("<tr style='color:blue;font-weight:bold;'><td colspan='3'>Beat Goal (%.2f)</td><td align='right'>+ %.2f</td></tr>", $targetMiles, $thisWeeksTotal - $targetMiles);
         }
 
 
-        //This weeks totals
         if ($thisWeeksTotal < $maxMiles) {
-         printf("<tr style='color:red;font-weight:bold;'><td colspan='3'>Miles to Beat Max (%.2f)</td><td align='right'>%.2f</td></tr>", $maxMiles, $maxMiles - $thisWeeksTotal);
+         printf("<tr style='color:red;font-weight:bold;'><td colspan='3'>Miles to Beat Max (%.2f)</td><td align='right'>%.2f</td></tr>", $maxMiles, $maxMiles - $thisWeeksTotal); 
         }
         else {
           printf("<tr style='color:blue;font-weight:bold;'><td colspan='3'>New Max Set !!</td><td align='right'>%.2f</td></tr>", $maxMiles);

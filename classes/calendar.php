@@ -9,6 +9,7 @@ class calendar {
   private $startDate;
   private $endDate;
   private $firstSunday;
+  private $monthTotals = array("Walk"=>0, "Run"=>0, "Total"=>0);
 
   function __construct($firstDayOfMonth) {
     $this->startDate = $firstDayOfMonth;
@@ -86,6 +87,7 @@ class calendar {
         $miles = $event->miles;
         $totals[$event->activity] += $miles;
         $totals["Total"] += $miles;
+        $this->monthTotals[$event->activity] += $miles;
       }
     }
     if ($totals["Total"] > 0) {
@@ -157,9 +159,76 @@ class calendar {
     print("<input type='submit' name='today' value='Today'>");
     print("</div>");
     list($walk, $run, $walkrun, $total, $entries, $aMiles) = DAL::GetTotalMiles();
-    printf("<div id='summaryLine'>%.2f miles, in %d entries, logged since 3/31/2013. (%.2f walking, %.2f running, %.2f on Asics)</div>", $total, $entries, $walk, $run, $aMiles);
+    print("<div id='summaryLine'>");
+    printf("%.2f miles, in %d entries, logged since 3/31/2013. (%.2f walking, %.2f running, %.2f on Asics)<br/>", $total, $entries, $walk, $run, $aMiles);
+    printf("This month's totals: %.2f walking, %.2f running", $this->monthTotals['Walk'], $this->monthTotals['Run']);
     print("</div>");
     print("</div>");
+    print("</div>");
+
+    $summaryCount = 5;
+    $top5 = DAL::GetSummary($summaryCount);
+    print("<div id='top5'>");
+    print("<span id='top5header'>TOP FIVES</span>");
+    print("<table width='100%' id='top5table'>");
+    print("<tr>");
+    print("<th colspan='2'>Months</th>");
+    print("<th colspan='2'>Weeks</th>");
+    print("<th colspan='2'>Days</th>");
+    print("<th colspan='3'>Pace</th>");
+    print("</tr>");
+    for ($rowIndex = 0; $rowIndex < $summaryCount; $rowIndex++) {
+      print("<tr>");
+      if ($rowIndex<count($top5['months'])) {
+        $year = $top5['months'][$rowIndex]['year'];
+        $month = $top5['months'][$rowIndex]['month'];
+        $monthDate = date("M", mktime(0, 0, 0, $month, 1, $year))."&nbsp;&nbsp;".$year;
+        printf("<td>%s</td><td class='rightcol'>%.2f</td>", $monthDate, $top5['months'][$rowIndex]['miles']);
+      }
+      else {
+        print("<td></td><td></td>");
+      }
+
+      if ($rowIndex<count($top5['weeks'])) {
+        $year = $top5['weeks'][$rowIndex]['year'];
+        $month = $top5['weeks'][$rowIndex]['month'];
+        $week = $top5['weeks'][$rowIndex]['week'];
+        $miles = $top5['weeks'][$rowIndex]['miles'];
+        $monthDate = date('m/d/Y', strtotime($year."W".$week."7"));
+        printf("<td>%s</td><td class='rightcol'>%.2f</td>", $monthDate, $miles);
+      }
+      else {
+        print("<td></td><td></td>");
+      }
+
+
+      if ($rowIndex<count($top5['miles'])) {
+        $date = $top5['miles'][$rowIndex]['dteDate'];
+        $miles = $top5['miles'][$rowIndex]['dblMiles'];
+        printf("<td>%s</td><td class='rightcol'>%.2f</td>", $date, $miles);
+      }
+      else {
+        print("<td></td><td></td>");
+      }
+
+
+      if ($rowIndex<count($top5['pace'])) {
+        $date = $top5['pace'][$rowIndex]['dteDate'];
+        $pace = $top5['pace'][$rowIndex]['pace'];
+        $miles = $top5['pace'][$rowIndex]['dblMiles'];
+        printf("<td>%s</td><td>%.2f</td><td>%s</td>", $date, $miles, $pace);
+      }
+      else {
+        print("<td></td><td></td><td></td>");
+      }
+
+
+
+      print("</tr>");
+    }
+    print("</table>");
+    print("</div>");
+
 
     print("<input type='hidden' name='startDate' value='$startDate'>");
     $date = new DateTime();
